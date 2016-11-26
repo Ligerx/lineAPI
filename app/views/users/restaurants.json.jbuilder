@@ -13,4 +13,10 @@ json.restaurants @restaurants do |r|
 
   json.time_open r.time_open
   json.time_closed r.time_closed
+
+  json.general_estimated_seating_time general_estimated_seating_time(r)
+
+  json.personal_estimated_seating_time do
+    json.personal_estimated_seating_time personal_estimated_seating_time(r)
+  end
 end
