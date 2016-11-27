@@ -6,6 +6,11 @@ class UsersController < ApplicationController
     @restaurants = Restaurant.all
   end
 
+  # GET /users/:id/restaurants/:restaurant_id
+  def restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
+  end
+
   # GET /users
   def index
     @users = User.all
