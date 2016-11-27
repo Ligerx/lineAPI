@@ -16,7 +16,6 @@ json.restaurants @restaurants do |r|
 
   json.general_estimated_seating_time general_estimated_seating_time(r)
 
-  json.personal_estimated_seating_time do
-    json.personal_estimated_seating_time personal_estimated_seating_time(r)
-  end
+  json.personal_estimated_seating_time personal_estimated_seating_time(r)
+
 end
