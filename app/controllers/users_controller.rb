@@ -63,16 +63,28 @@ class UsersController < ApplicationController
       # .count is index + 1, which works because we're looking
       # from the point of view of a reservation that hasn't been created yet
       next_spot_in_line = restaurant.reservations.waiting.count
+
+      # puts '-------- general estimated seating time next_spot_in_line is '
+      # puts next_spot_in_line
+
       estimated_seating_time(restaurant, next_spot_in_line)
     end
     helper_method :general_estimated_seating_time
 
     # Estimate your personal seating time for a restaurant.
     def personal_estimated_seating_time(restaurant)
-      user_reservation = restaurant.reservations.for_user(params[:id]).by_time_reserved.first
-      waiting_list = restaurant.reservations.waiting.by_time_reserved
+      user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
 
+      # puts "*** user_reservation is #{user_reservation.inspect}"
+
+      return nil if user_reservation.nil?
+
+      waiting_list = restaurant.reservations.waiting.by_time_reserved
       user_spot_in_line = find_spot_in_line(user_reservation, waiting_list)
+
+      # puts '-------- personal estimated seating time user_spot_in_line is '
+      # puts user_spot_in_line
+
       estimated_seating_time(restaurant, user_spot_in_line)
     end
     helper_method :personal_estimated_seating_time
@@ -89,6 +101,11 @@ class UsersController < ApplicationController
     # If it's someone waiting, calculate the time based on who THAT person is waiting for.
     def calculate_estimated_seating_time(spot_in_line, num_empty_tables, seated_and_waiting_list)
       # Table available immediately if you're in the front of the line and a table is open for you.
+
+      # puts '-------- inside calculate estimated seating time ------------'
+      # puts spot_in_line
+      # puts num_empty_tables
+
       empty_table_available_for_user = spot_in_line < num_empty_tables
       return DateTime.now if empty_table_available_for_user
 
@@ -106,6 +123,6 @@ class UsersController < ApplicationController
 
     def find_spot_in_line(reservation, waiting_list)
       # Return the index of the reservation in the waiting list
-      waiting_list.index(user_reservation) # remember, counting starts at 0
+      waiting_list.find_index(reservation) # remember, counting starts at 0
     end
 end
