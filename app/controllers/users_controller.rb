@@ -89,8 +89,8 @@ class UsersController < ApplicationController
     # If it's someone waiting, calculate the time based on who THAT person is waiting for.
     def calculate_estimated_seating_time(spot_in_line, num_empty_tables, seated_and_waiting_list)
       # Table available immediately if you're in the front of the line and a table is open for you.
-      empty_table_available_for_user? = spot_in_line < num_empty_tables
-      return DateTime.now if empty_table_available_for_user?
+      empty_table_available_for_user = spot_in_line < num_empty_tables
+      return DateTime.now if empty_table_available_for_user
 
       corresponding_spot_in_line = spot_in_line - num_empty_tables
       corresponding_reservation = seated_and_waiting_list[corresponding_spot_in_line]
