@@ -78,7 +78,7 @@ class UsersController < ApplicationController
     helper_method :personal_estimated_seating_time
 
     def estimated_seating_time(restaurant, spot_in_line)
-      num_empty_tables = restaurant.num_tables - restaurant.still_eating.count
+      num_empty_tables = restaurant.num_tables - restaurant.reservations.still_eating.count
       seated_and_waiting_list = restaurant.reservations.waiting_or_seated.by_time_reserved.by_time_seated
 
       calculate_estimated_seating_time(spot_in_line, num_empty_tables, seated_and_waiting_list)
