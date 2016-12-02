@@ -37,9 +37,6 @@ class UsersController < ApplicationController
   def cancel_reservation
     set_user
 
-    # TODO: What if there's no reservation? It'll crash
-    #       What if there's multiple reservations somehow?
-    #       Is this for the user, or is it for the user per restaurant?
     reservations = @user.reservations.waiting
     if reservations.count == 0
       render  status: :unprocessable_entity,
@@ -113,40 +110,6 @@ class UsersController < ApplicationController
 
     # White list params for reservation
     def reservation_params
-      # puts "INSIDE RESERVATION_PARAMS"
-      # puts params.inspect
-      # puts "********** user params are #{user_params.inspect}"
-
-      # # Need to manually rewrite id as user_id cause that's how I'm hacking together the API
-      # user_id = params.delete :id
-      # restaurant_id = params.delete :restaurant_id
-
-      # # puts "user_id is #{user_id}"
-      # # puts "restaurant_id is #{restaurant_id}"
-
-      # # The only thing the user is sending is the party_size
-      # # The user and restaurant id are in the URL
-      # params.require(:reservation).permit(:party_size, :restaurant_id, :user_id)
-
-      # # puts "reservations params is #{params[:reservation].inspect}"
-
-      # params[:reservation].merge!(user_id: user_id, restaurant_id: restaurant_id)
-
-      # puts params[:reservation].inspect
-
-      # return params[:reservation]
-
-      # puts params[:id]
-      # puts params[:restaurant_id]
-      # puts params[:reservation]
-      # puts params[:reservation][:party_size]
-
-      # val = {
-      #   user_id: params[:id],
-      #   restaurant_id: params[:restaurant_id],
-      #   party_size: params[:reservation][:party_size]
-      # }
-
       return {
         user_id: params[:id],
         restaurant_id: params[:restaurant_id],
