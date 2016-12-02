@@ -3,12 +3,62 @@ class UsersController < ApplicationController
 
   # GET /users/:id/restaurants
   def restaurants
+    # TODO: Update this so it is only returning in range restaurants.
     @restaurants = Restaurant.all
   end
 
   # GET /users/:id/restaurants/:restaurant_id
   def restaurant
     @restaurant = Restaurant.find(params[:restaurant_id])
+  end
+
+  # POST /users/:id/restaurants/:restaurant_id/make-reservation
+  def make_reservation
+    set_user
+
+    # Currently only allowing only 1 reservation per restaurant at a time
+    if @user.reservations.waiting.count > 0
+      render  status: :unprocessable_entity,
+              json: { message: "Failed to make reservation. You many only have one reservation at a time." }.to_json
+      return
+    end
+
+    @reservation = Reservation.new(reservation_params)
+
+    if @reservation.save
+      # Return 200 with empty body
+      head :ok
+    else
+      render json: @reservation.errors, status: :unprocessable_entity
+    end
+  end
+
+  # POST /users/:id/restaurants/:restaurant_id/cancel-reservation
+  def cancel_reservation
+    set_user
+
+    # TODO: What if there's no reservation? It'll crash
+    #       What if there's multiple reservations somehow?
+    #       Is this for the user, or is it for the user per restaurant?
+    reservations = @user.reservations.waiting
+    if reservations.count == 0
+      render  status: :unprocessable_entity,
+              json: { message: "Failed to cancel reservation because you currently have no reservations." }.to_json
+      return
+    elsif reservations.count > 1
+      render  status: :unprocessable_entity,
+              json: { message: "WEIRD, why do you have more than 1 reservation?" }.to_json
+      return
+    end
+
+    reservation = reservations.first
+    reservation.cancel
+
+    if reservation.save
+      head :ok
+    else
+      render json: @reservation.errors, status: :unprocessable_entity
+    end
   end
 
   # GET /users
@@ -61,7 +111,48 @@ class UsersController < ApplicationController
 
 
 
+    # White list params for reservation
+    def reservation_params
+      # puts "INSIDE RESERVATION_PARAMS"
+      # puts params.inspect
+      # puts "********** user params are #{user_params.inspect}"
 
+      # # Need to manually rewrite id as user_id cause that's how I'm hacking together the API
+      # user_id = params.delete :id
+      # restaurant_id = params.delete :restaurant_id
+
+      # # puts "user_id is #{user_id}"
+      # # puts "restaurant_id is #{restaurant_id}"
+
+      # # The only thing the user is sending is the party_size
+      # # The user and restaurant id are in the URL
+      # params.require(:reservation).permit(:party_size, :restaurant_id, :user_id)
+
+      # # puts "reservations params is #{params[:reservation].inspect}"
+
+      # params[:reservation].merge!(user_id: user_id, restaurant_id: restaurant_id)
+
+      # puts params[:reservation].inspect
+
+      # return params[:reservation]
+
+      # puts params[:id]
+      # puts params[:restaurant_id]
+      # puts params[:reservation]
+      # puts params[:reservation][:party_size]
+
+      # val = {
+      #   user_id: params[:id],
+      #   restaurant_id: params[:restaurant_id],
+      #   party_size: params[:reservation][:party_size]
+      # }
+
+      return {
+        user_id: params[:id],
+        restaurant_id: params[:restaurant_id],
+        party_size: params[:reservation][:party_size]
+      }
+    end
 
     # Checking for the general seating time as if you were
     # about to put yourself at the end of the line.

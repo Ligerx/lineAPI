@@ -2,6 +2,11 @@ class Reservation < ApplicationRecord
   belongs_to :restaurant
   belongs_to :user
 
+  before_create :set_time_reserved
+  before_create :default_cancelled_false
+
+  validates :party_size, :restaurant, :user, presence: true
+
   scope :not_seated, -> { where(time_seated: nil) }
   scope :seated, -> { where.not(time_seated: nil) }
   scope :has_left, -> { where.not(time_left: nil) }
@@ -24,4 +29,19 @@ class Reservation < ApplicationRecord
     # Not sure if I need to check for other conditions other than time_seated
     time_seated != nil
   end
+
+  def cancel
+    self.cancelled = true
+  end
+
+  private
+    def set_time_reserved
+      self.time_reserved = DateTime.now
+    end
+
+    def default_cancelled_false
+      self.cancelled = false
+    end
+
+
 end
