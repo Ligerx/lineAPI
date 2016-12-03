@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users/:id/restaurants/:restaurant_id/cancel-reservation
+  # POST /users/:id/restaurants/cancel-reservation
   def cancel_reservation
     set_user
 
