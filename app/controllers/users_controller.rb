@@ -26,8 +26,8 @@ class UsersController < ApplicationController
     @reservation = Reservation.new(reservation_params)
 
     if @reservation.save
-      # Return 200 with empty body
-      head :ok
+      # Respond w/ the estimated seating time so the view can update itself.
+      render json: { personal_estimated_seating_time: personal_estimated_seating_time(@reservation.restaurant) }
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end
@@ -52,7 +52,8 @@ class UsersController < ApplicationController
     reservation.cancel
 
     if reservation.save
-      head :ok
+      # Return 204 with empty body
+      head :no_content
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end
@@ -110,6 +111,8 @@ class UsersController < ApplicationController
 
     # White list params for reservation
     def reservation_params
+      puts params.inspect
+
       return {
         user_id: params[:id],
         restaurant_id: params[:restaurant_id],
