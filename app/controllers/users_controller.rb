@@ -127,7 +127,9 @@ class UsersController < ApplicationController
       # puts '-------- general estimated seating time next_spot_in_line is '
       # puts next_spot_in_line
 
-      estimated_seating_time(restaurant, next_spot_in_line)
+      time = estimated_seating_time(restaurant, next_spot_in_line)
+
+      time.strftime('%Y/%m/%d %H:%M')
     end
     helper_method :general_estimated_seating_time
 
