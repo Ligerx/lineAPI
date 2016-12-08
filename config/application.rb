@@ -26,5 +26,10 @@ module LineAPI
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Force it to be in EST to get around stupid problems I was having earlier.
+    # Depending on the way I was creating the JSON data, it would be in EST or UST.
+    # and that would screw up my output.
+    config.time_zone = 'Eastern Time (US & Canada)'
   end
 end
