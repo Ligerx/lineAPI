@@ -1,25 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyString
-  phone: MyString
-  picture: MyString
-  address: MyString
-  latitude: 1.5
-  longitude: 1.5
-  time_open: MyString
-  time_closed: MyString
-  num_tables: 1
+unionGrill:
+  name: Union Grill
+  description: Union Grill description
+  phone: (412) 681-8620
+  picture: http://theuniongrill.com/wp-content/uploads/2012/09/banner2.jpg
+  address: 413 S Craig St, Pittsburgh, PA 15213
+  latitude: 40.444835
+  longitude: -79.948529
+  time_open: 11:30am
+  time_closed: 10pm
+  num_tables: 2
 
-two:
-  name: MyString
-  description: MyString
-  phone: MyString
-  picture: MyString
-  address: MyString
-  latitude: 1.5
-  longitude: 1.5
-  time_open: MyString
-  time_closed: MyString
-  num_tables: 1
+porch:
+  name: The Porch
+  description: The Porch description
+  phone: (412) 687-6724
+  picture: https://media-cdn.tripadvisor.com/media/photo-s/02/d8/2f/12/the-porch-at-schenley.jpg
+  address: 221 Schenley Drive, Pittsburgh, PA 15213
+  latitude: 40.442758
+  longitude: -79.953102
+  time_open: 11am
+  time_closed: 11pm
+  num_tables: 3

@@ -1,15 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  password: MyString
-  phone: MyString
+alex:
+  first_name: Alex
+  last_name: Wang
+  email: awang1@andrew.cmu.edu
+  password: password
+  phone: 1234567890
 
-two:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  password: MyString
-  phone: MyString
+rhoeun:
+  first_name: RhoEun
+  last_name: Song
+  email: rhoeuns@andrew.cmu.edu
+  password: password
+  phone: 1234567890
+
+user3:
+  first_name: User
+  last_name: Three
+  email: user3@andrew.cmu.edu
+  password: password
+  phone: 1234567890
