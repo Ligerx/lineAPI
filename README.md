@@ -24,7 +24,7 @@ heroku run rake db:migrate db:seed
 ```
 
 
-#### Timezone issues:
+## Timezone issues:
 I was having trouble getting things to display in the correct timezone.
 Sometimes things would display in UTC and sometimes in EST.
 To try fixing this, I added `config.time_zone` to `application.rb` and that seemed to fix it locally.
