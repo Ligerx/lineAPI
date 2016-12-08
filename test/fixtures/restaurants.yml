@@ -1,5 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+one:
+  name: MyString
+  description: MyString
+  phone: MyString
+  picture: MyString
+  address: MyString
+  latitude: 1.5
+  longitude: 1.5
+  time_open: MyString
+  time_closed: MyString
+  num_tables: 1
+
+two:
+  name: MyString
+  description: MyString
+  phone: MyString
+  picture: MyString
+  address: MyString
+  latitude: 1.5
+  longitude: 1.5
+  time_open: MyString
+  time_closed: MyString
+  num_tables: 1
+  
 unionGrill:
   name: Union Grill
   description: Union Grill description

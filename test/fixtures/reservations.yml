@@ -2,6 +2,24 @@
 
 one:
   party_size: 1
+  time_reserved: 2016-11-20 16:26:20
+  time_seated: 2016-11-20 16:26:20
+  time_left: 2016-11-20 16:26:20
+  cancelled: false
+  restaurant: one
+  user: one
+
+two:
+  party_size: 1
+  time_reserved: 2016-11-20 16:26:20
+  time_seated: 2016-11-20 16:26:20
+  time_left: 2016-11-20 16:26:20
+  cancelled: false
+  restaurant: two
+  user: two
+
+seated1:
+  party_size: 1
   time_reserved: 2016-11-21 17:00:00
   time_seated: 2016-11-21 18:00:00
   time_left: null
@@ -9,20 +27,11 @@ one:
   restaurant: unionGrill
   user: alex
 
-two:
+seated2:
   party_size: 2
   time_reserved: 2016-11-21 17:00:00
   time_seated: 2016-11-21 18:00:00
   time_left: null
-  cancelled: false
-  restaurant: porch
-  user: rhoeun
-
-old:
-  party_size: 4
-  time_reserved: 2016-11-10 17:00:00
-  time_seated: 2016-11-10 18:00:00
-  time_left: 2016-11-10 19:00:00
   cancelled: false
   restaurant: porch
   user: rhoeun
@@ -34,4 +43,13 @@ inLine:
     time_left: null
     cancelled: false
     restaurant: porch
-    user: rhoeun
+    user: user3
+
+old1:
+  party_size: 4
+  time_reserved: 2016-11-10 17:00:00
+  time_seated: 2016-11-10 18:00:00
+  time_left: 2016-11-10 19:00:00
+  cancelled: false
+  restaurant: porch
+  user: user3
