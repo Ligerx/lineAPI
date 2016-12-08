@@ -21,7 +21,7 @@
     <span>Restaurant #: </span>
     <input type="text" name="restaurant" placeholder="blank">
 
-    <input type="button" value="Show" />
+    <input type="button" value="Show" id="show-button" />
   </form>
 
   <br>
@@ -33,7 +33,7 @@
     <span>Restaurant #: </span>
     <input type="text" name="restaurant">
 
-    <input type="button" value="Make Reservation" />
+    <input type="button" value="Make Reservation" id="make-reservation-button" />
   </form>
 
   <br>
@@ -42,20 +42,87 @@
     <span>User #: </span>
     <input type="text" name="user" value="">
 
-    <input type="button" value="Cancel Reservation" />
+    <input type="button" value="Cancel Reservation" id="cancel-reservation-button" />
   </form>
 
+  <br>
+  <div class="url"></div>
+  <br>
   <div class="response"></div>
 
   <script type="text/javascript">
-  
-  $('.show').click(function() {
+  $('#show-button').click(function() {
+    var user = $('.show input[name="user"]').val();
+    var restaurant = $('.show input[name="restaurant"]').val();
+    var url = '/users';
+
+    url += '/' + user + '/restaurants/';
+    if(restaurant) {
+      url += restaurant;
+    }
+    $('.url').html('URL: ' + url);
+
     $.ajax({
       method: "GET",
-      url: "/users/1/restaurants.json"
+      dataType: 'json',
+      url: url
     })
     .done(function( msg ) {
+      console.log('Got server response');
+      console.log(msg);
       $('.response').html('<pre>' + JSON.stringify(msg, null, 4) + '</pre>');
+    })
+    .fail(function(error) {
+      $('.response').html('<pre>Error\n' + JSON.stringify(error, null, 4) + '</pre>');
+    });
+  });
+
+  $('#make-reservation-button').click(function() {
+    var user = $('.make-reservation input[name="user"]').val();
+    var restaurant = $('.make-reservation input[name="restaurant"]').val();
+    var url = '/users';
+
+    url += '/' + user + '/restaurants/';
+    if(restaurant) {
+      url += restaurant;
+    }
+    url += '/make-reservation'
+    $('.url').html('URL: ' + url);
+
+    var data = { "reservation": { "party_size": 4 } };
+    $.ajax({
+      method: "POST",
+      dataType: 'json',
+      url: url,
+      data: data
+    })
+    .done(function( msg ) {
+      console.log('Got server response');
+      console.log(msg);
+      $('.response').html('<pre>' + JSON.stringify(msg, null, 4) + '</pre>');
+    })
+    .fail(function(error) {
+      $('.response').html('<pre>Error\n' + JSON.stringify(error, null, 4) + '</pre>');
+    });
+  });
+
+  $('#cancel-reservation-button').click(function() {
+    var user = $('.cancel-reservation input[name="user"]').val();
+    var url = '/users/' + user + '/restaurants/cancel-reservation';
+    $('.url').html('URL: ' + url);
+
+    $.ajax({
+      method: "POST",
+      dataType: 'json',
+      url: url,
+    })
+    .done(function( msg ) {
+      console.log('Got server response');
+      console.log(msg);
+      $('.response').html('<pre>Successfully cancelled!</pre>');
+    })
+    .fail(function(error) {
+      $('.response').html('<pre>Error\n' + JSON.stringify(error, null, 4) + '</pre>');
     });
   });
   </script>
