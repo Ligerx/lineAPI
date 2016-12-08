@@ -20,3 +20,10 @@ user3:
   email: user3@andrew.cmu.edu
   password: password
   phone: 1234567890
+
+user4:
+  first_name: User
+  last_name: Four
+  email: user4@andrew.cmu.edu
+  password: password
+  phone: 1234567890

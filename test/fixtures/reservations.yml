@@ -17,3 +17,21 @@ two:
   cancelled: false
   restaurant: porch
   user: rhoeun
+
+old:
+  party_size: 4
+  time_reserved: 2016-11-10 17:00:00
+  time_seated: 2016-11-10 18:00:00
+  time_left: 2016-11-10 19:00:00
+  cancelled: false
+  restaurant: porch
+  user: rhoeun
+
+inLine:
+    party_size: 4
+    time_reserved: 2016-11-21 17:30:00
+    time_seated: null
+    time_left: null
+    cancelled: false
+    restaurant: porch
+    user: rhoeun
