@@ -35,4 +35,22 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 204
   end
+
+  test "should make reservation" do
+    user4 = users(:user4)
+    porch = restaurants(:porch)
+    post make_reservation_url(user4, porch), params: { reservation: { party_size: 5 } }, as: :json
+
+    assert_response 200
+    assert_equal porch.reservations.count, 4
+  end
+
+  test "should not make reservation" do
+    user3 = users(:user3)
+    porch = restaurants(:porch)
+    post make_reservation_url(user3, porch), params: { reservation: { party_size: 5 } }, as: :json
+
+    assert_response 422
+    assert_equal porch.reservations.count, 3
+  end
 end
