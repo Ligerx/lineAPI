@@ -105,6 +105,60 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+
+  #########  JBuilder helper methods  #########
+  # Checking for the general seating time as if you were
+  # about to put yourself at the end of the line.
+  def general_estimated_seating_time(restaurant)
+    # .count is index + 1, which works because we're looking
+    # from the point of view of a reservation that hasn't been created yet
+    next_spot_on_wl = restaurant.reservations.waiting.count
+
+    # puts '-------- general estimated seating time next_spot_on_wl is '
+    # puts next_spot_on_wl
+    # byebug
+    time = estimated_seating_time(restaurant, next_spot_on_wl)
+
+    time.strftime('%Y/%m/%d %H:%M')
+  end
+  helper_method :general_estimated_seating_time
+
+  # Estimate your personal seating time for a restaurant.
+  def personal_estimated_seating_time(restaurant)
+    user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
+
+    # puts "*** user_reservation is #{user_reservation.inspect}"
+
+    return nil if user_reservation.nil?
+
+    waiting_list = restaurant.reservations.waiting.by_time_reserved
+    user_spot_on_wl = find_spot_in_line(user_reservation, waiting_list)
+
+    # puts '-------- personal estimated seating time user_spot_on_wl is '
+    # puts user_spot_on_wl
+
+    time = estimated_seating_time(restaurant, user_spot_on_wl)
+
+    time.strftime('%Y/%m/%d %H:%M')
+  end
+  helper_method :personal_estimated_seating_time
+
+  def position_in_line(restaurant)
+    user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
+    waiting_list = restaurant.reservations.waiting
+    spot = find_spot_in_line(user_reservation, waiting_list) # index 0
+
+    if spot
+      spot + 1 # make it start counting at 1
+    else
+      nil
+    end
+  end
+  helper_method :position_in_line
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -115,7 +169,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :phone)
     end
-
 
 
     # White list params for reservation
@@ -134,41 +187,6 @@ class UsersController < ApplicationController
       params.require(:restaurants).permit(uuids: [])
     end
 
-    # Checking for the general seating time as if you were
-    # about to put yourself at the end of the line.
-    def general_estimated_seating_time(restaurant)
-      # .count is index + 1, which works because we're looking
-      # from the point of view of a reservation that hasn't been created yet
-      next_spot_on_wl = restaurant.reservations.waiting.count
-
-      # puts '-------- general estimated seating time next_spot_on_wl is '
-      # puts next_spot_on_wl
-      # byebug
-      time = estimated_seating_time(restaurant, next_spot_on_wl)
-
-      time.strftime('%Y/%m/%d %H:%M')
-    end
-    helper_method :general_estimated_seating_time
-
-    # Estimate your personal seating time for a restaurant.
-    def personal_estimated_seating_time(restaurant)
-      user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
-
-      # puts "*** user_reservation is #{user_reservation.inspect}"
-
-      return nil if user_reservation.nil?
-
-      waiting_list = restaurant.reservations.waiting.by_time_reserved
-      user_spot_on_wl = find_spot_in_line(user_reservation, waiting_list)
-
-      # puts '-------- personal estimated seating time user_spot_on_wl is '
-      # puts user_spot_on_wl
-
-      time = estimated_seating_time(restaurant, user_spot_on_wl)
-
-      time.strftime('%Y/%m/%d %H:%M')
-    end
-    helper_method :personal_estimated_seating_time
 
     def estimated_seating_time(restaurant, spot_on_wl)
       num_empty_tables = restaurant.num_tables - restaurant.reservations.still_eating.count
@@ -204,13 +222,5 @@ class UsersController < ApplicationController
       # Return the index of the reservation in the waiting list
       list.find_index(reservation) # remember, counting starts at 0
     end
-
-    def position_in_line(restaurant)
-      user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
-      waiting_list = restaurant.reservations.waiting
-      # index 0
-      find_spot_in_line(user_reservation, waiting_list) # index 0
-    end
-    helper_method :position_in_line
 
 end

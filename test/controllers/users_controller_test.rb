@@ -81,4 +81,25 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "general time with long line" do
 
   end
+
+  test "personal time with an open table" do
+
+  end
+
+  test "personal time with no open tables and short line" do
+
+  end
+
+  test "personal time with long line" do
+
+  end
+
+  test "position in line should be null if not in line" do
+
+  end
+
+  test "position in line should work" do
+    
+  end
+
 end
