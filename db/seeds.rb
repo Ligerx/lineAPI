@@ -6,11 +6,20 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-jsonString = '{"restaurants":[{"name":"Union Grill","description":"Bustling spot popular with the college crowd & known for piled-high burgers & waffle-cut fries.","phone":"(412) 681-8620","picture":"http://theuniongrill.com/wp-content/uploads/2012/09/banner2.jpg","address":"413 S Craig St, Pittsburgh, PA 15213","latitude":40.444835,"longitude":-79.948529,"time_open":"11:30am","time_closed":"10pm","num_tables":2},{"name":"The Porch","description":"Sunny bistro for gourmet pizzas, burgers & more with a counter service lunch & full service dinner.","phone":"(412) 687-6724","picture":"https://media-cdn.tripadvisor.com/media/photo-s/02/d8/2f/12/the-porch-at-schenley.jpg","address":"221 Schenley Drive, Pittsburgh, PA 15213","latitude":40.442758,"longitude":-79.953102,"time_open":"11am","time_closed":"11pm","num_tables":30}],"users":[{"first_name":"Alex","last_name":"Wang","email":"awang1@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"RhoEun","last_name":"Song","email":"rhoeuns@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"User","last_name":"Three","email":"user3@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"User","last_name":"Four","email":"user4@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"User","last_name":"Five","email":"user5@andrew.cmu.edu","password":"password","phone":"1234567890"}]}'
+jsonString = '{"restaurants":[{"name":"Union Grill","description":"Bustling spot popular with the college crowd & known for piled-high burgers & waffle-cut fries.","phone":"(412) 681-8620","picture":"http://theuniongrill.com/wp-content/uploads/2012/09/banner2.jpg","address":"413 S Craig St, Pittsburgh, PA 15213","latitude":40.444835,"longitude":-79.948529,"time_open":"11:30am","time_closed":"10pm","num_tables":2},{"name":"The Porch","description":"Sunny bistro for gourmet pizzas, burgers & more with a counter service lunch & full service dinner.","phone":"(412) 687-6724","picture":"https://media-cdn.tripadvisor.com/media/photo-s/02/d8/2f/12/the-porch-at-schenley.jpg","address":"221 Schenley Drive, Pittsburgh, PA 15213","latitude":40.442758,"longitude":-79.953102,"time_open":"11am","time_closed":"11pm","num_tables":30},{"name":"Rose Tea Cafe","description":"Nothing-fancy eatery offering a variety of traditional Chinese recipes.","phone":"(412) 802-0788","picture":"https://s3-media4.fl.yelpcdn.com/bphoto/X6p3LrwVGtO5rQnmBZIYNg/ls.jpg","address":"416 S Craig St, Pittsburgh, PA 15213","latitude":40.444835,"longitude":-79.948529,"time_open":"11am","time_closed":"9pm","num_tables":5}],"users":[{"first_name":"Alex","last_name":"Wang","email":"awang1@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"RhoEun","last_name":"Song","email":"rhoeuns@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"User","last_name":"Three","email":"user3@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"User","last_name":"Four","email":"user4@andrew.cmu.edu","password":"password","phone":"1234567890"},{"first_name":"User","last_name":"Five","email":"user5@andrew.cmu.edu","password":"password","phone":"1234567890"}]}'
 json = ActiveSupport::JSON.decode(jsonString)
 
-restaurant1 = Restaurant.create(json["restaurants"][0])
-restaurant2 = Restaurant.create(json["restaurants"][1])
+restaurant1 = Restaurant.new(json["restaurants"][0])
+restaurant1.beaconUUID = "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+restaurant1.save
+
+restaurant2 = Restaurant.new(json["restaurants"][1])
+restaurant2.beaconUUID = "fakeUUID"
+restaurant2.save
+
+restaurant3 = Restaurant.new(json["restaurants"][2])
+restaurant3.beaconUUID = "fakeUUID"
+restaurant3.save
 
 user1 = User.create(json["users"][0])
 user2 = User.create(json["users"][1])
@@ -58,67 +67,79 @@ reservation1.save!
 
 #####   This is the sample JSON used in the seed   #####
 # {
-#     "restaurants":[
-#         {
-#             "name":"Union Grill",
-#             "description":"Bustling spot popular with the college crowd & known for piled-high burgers & waffle-cut fries.",
-#             "phone":"(412) 681-8620",
-#             "picture":"http://theuniongrill.com/wp-content/uploads/2012/09/banner2.jpg",
-#             "address":"413 S Craig St, Pittsburgh, PA 15213",
-#             "latitude":40.444835,
-#             "longitude":-79.948529,
-#             "time_open":"11:30am",
-#             "time_closed":"10pm",
-#             "num_tables":2
-#         },
-#         {
-#             "name":"The Porch",
-#             "description":"Sunny bistro for gourmet pizzas, burgers & more with a counter service lunch & full service dinner.",
-#             "phone":"(412) 687-6724",
-#             "picture":"https://media-cdn.tripadvisor.com/media/photo-s/02/d8/2f/12/the-porch-at-schenley.jpg",
-#             "address":"221 Schenley Drive, Pittsburgh, PA 15213",
-#             "latitude":40.442758,
-#             "longitude":-79.953102,
-#             "time_open":"11am",
-#             "time_closed":"11pm",
-#             "num_tables":30
-#         }
-#     ],
-#     "users":[
-#         {
-#             "first_name":"Alex",
-#             "last_name":"Wang",
-#             "email":"awang1@andrew.cmu.edu",
-#             "password":"password",
-#             "phone":"1234567890"
-#         },
-#         {
-#             "first_name":"RhoEun",
-#             "last_name":"Song",
-#             "email":"rhoeuns@andrew.cmu.edu",
-#             "password":"password",
-#             "phone":"1234567890"
-#         },
-#         {
-#             "first_name":"User",
-#             "last_name":"Three",
-#             "email":"user3@andrew.cmu.edu",
-#             "password":"password",
-#             "phone":"1234567890"
-#         },
-#         {
-#             "first_name":"User",
-#             "last_name":"Four",
-#             "email":"user4@andrew.cmu.edu",
-#             "password":"password",
-#             "phone":"1234567890"
-#         },
-#         {
-#             "first_name":"User",
-#             "last_name":"Five",
-#             "email":"user5@andrew.cmu.edu",
-#             "password":"password",
-#             "phone":"1234567890"
-#         }
-#     ]
+#   "restaurants":[
+#     {
+#       "name":"Union Grill",
+#       "description":"Bustling spot popular with the college crowd & known for piled-high burgers & waffle-cut fries.",
+#       "phone":"(412) 681-8620",
+#       "picture":"http://theuniongrill.com/wp-content/uploads/2012/09/banner2.jpg",
+#       "address":"413 S Craig St, Pittsburgh, PA 15213",
+#       "latitude":40.444835,
+#       "longitude":-79.948529,
+#       "time_open":"11:30am",
+#       "time_closed":"10pm",
+#       "num_tables":2
+#     },
+#     {
+#       "name":"The Porch",
+#       "description":"Sunny bistro for gourmet pizzas, burgers & more with a counter service lunch & full service dinner.",
+#       "phone":"(412) 687-6724",
+#       "picture":"https://media-cdn.tripadvisor.com/media/photo-s/02/d8/2f/12/the-porch-at-schenley.jpg",
+#       "address":"221 Schenley Drive, Pittsburgh, PA 15213",
+#       "latitude":40.442758,
+#       "longitude":-79.953102,
+#       "time_open":"11am",
+#       "time_closed":"11pm",
+#       "num_tables":30
+#     },
+#     {
+#       "name":"Rose Tea Cafe",
+#       "description":"Nothing-fancy eatery offering a variety of traditional Chinese recipes.",
+#       "phone":"(412) 802-0788",
+#       "picture":"https://s3-media4.fl.yelpcdn.com/bphoto/X6p3LrwVGtO5rQnmBZIYNg/ls.jpg",
+#       "address":"416 S Craig St, Pittsburgh, PA 15213",
+#       "latitude":40.444835,
+#       "longitude":-79.948529,
+#       "time_open":"11am",
+#       "time_closed":"9pm",
+#       "num_tables":5
+#     }
+#   ],
+#   "users":[
+#     {
+#       "first_name":"Alex",
+#       "last_name":"Wang",
+#       "email":"awang1@andrew.cmu.edu",
+#       "password":"password",
+#       "phone":"1234567890"
+#     },
+#     {
+#       "first_name":"RhoEun",
+#       "last_name":"Song",
+#       "email":"rhoeuns@andrew.cmu.edu",
+#       "password":"password",
+#       "phone":"1234567890"
+#     },
+#     {
+#       "first_name":"User",
+#       "last_name":"Three",
+#       "email":"user3@andrew.cmu.edu",
+#       "password":"password",
+#       "phone":"1234567890"
+#     },
+#     {
+#       "first_name":"User",
+#       "last_name":"Four",
+#       "email":"user4@andrew.cmu.edu",
+#       "password":"password",
+#       "phone":"1234567890"
+#     },
+#     {
+#       "first_name":"User",
+#       "last_name":"Five",
+#       "email":"user5@andrew.cmu.edu",
+#       "password":"password",
+#       "phone":"1234567890"
+#     }
+#   ]
 # }
