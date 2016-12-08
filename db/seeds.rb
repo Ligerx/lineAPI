@@ -10,11 +10,11 @@ jsonString = '{"restaurants":[{"name":"Union Grill","description":"Bustling spot
 json = ActiveSupport::JSON.decode(jsonString)
 
 restaurant1 = Restaurant.new(json["restaurants"][0])
-restaurant1.beaconUUID = "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+restaurant1.beaconUUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 restaurant1.save
 
 restaurant2 = Restaurant.new(json["restaurants"][1])
-restaurant2.beaconUUID = "b9407f30-f5f8-466e-aff9-25556b57fe6d"
+restaurant2.beaconUUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 restaurant2.save
 
 restaurant3 = Restaurant.new(json["restaurants"][2])
