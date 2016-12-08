@@ -23,6 +23,8 @@ Then migrate and seed:
 heroku run rake db:migrate db:seed
 ```
 
+## Web interface
+While there's no standard web app pages, I built a scrappy page to fetch data and update the database to make my life a litte easlier. You can find it at the home page of this app.
 
 ## Timezone issues:
 I was having trouble getting things to display in the correct timezone.
