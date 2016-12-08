@@ -1,4 +1,10 @@
-### Run `rails db:seed` to populate database with mock data. Or `rails db:setup` to reset everything first
+### Local:
+To populate database with mock data: ```rails db:seed```
+Or to reset everything: ```rails db:reset```
+
+### Heroku Server:
+First reset the database: ```heroku pg:reset DATABASE --confirm queue-api```
+Then migrate and seed: ```heroku run rake db:migrate db:seed```
 
 # README
 
