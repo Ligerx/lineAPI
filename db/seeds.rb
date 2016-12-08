@@ -14,7 +14,7 @@ restaurant1.beaconUUID = "b9407f30-f5f8-466e-aff9-25556b57fe6d"
 restaurant1.save
 
 restaurant2 = Restaurant.new(json["restaurants"][1])
-restaurant2.beaconUUID = "fakeUUID"
+restaurant2.beaconUUID = "b9407f30-f5f8-466e-aff9-25556b57fe6d"
 restaurant2.save
 
 restaurant3 = Restaurant.new(json["restaurants"][2])
