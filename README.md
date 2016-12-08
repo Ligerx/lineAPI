@@ -1,7 +1,7 @@
 # Queue API
 Backend Rails-api for our [67-442 iOS project](https://github.com/rhoeuns/67442_project)
 
-
+## Setting up the database
 ### Local:
 To populate database with mock data:
 ```
