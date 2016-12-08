@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
+  def web
+    render 'pages/simple-web-interface'
+  end
+
   # GET /users/:id/restaurants
   def restaurants
     # TODO: Update this so it is only returning in range restaurants.

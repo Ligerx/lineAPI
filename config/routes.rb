@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   post '/users/:id/restaurants/:restaurant_id/make-reservation', to: 'users#make_reservation'
   post '/users/:id/restaurants/cancel-reservation', to: 'users#cancel_reservation'
 
+  get'/web', to: 'users#web'
+  root 'users#web'
 end
