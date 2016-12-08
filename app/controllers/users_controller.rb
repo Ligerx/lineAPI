@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def restaurants
     # TODO: Update this so it is only returning in range restaurants.
     if params[:restaurants]
-      @restaurants = Restaurant.where(beaconUUID: uuid_params)
+      @restaurants = Restaurant.where(beaconUUID: uuid_params['uuids'])
     else
       # fallback if no uuids are attempted to be passed???
       @restaurants = Restaurant.all
