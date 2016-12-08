@@ -69,4 +69,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 422
   end
+
+  test "general time with an open table" do
+
+  end
+
+  test "general time with no open tables and short line" do
+
+  end
+
+  test "general time with long line" do
+
+  end
 end
