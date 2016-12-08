@@ -99,7 +99,25 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "position in line should work" do
-    
+    user3 = users(:user3)
+    porch = restaurants(:porch)
+
+    get user_restaurant_url(user3, porch), as: :json
+    json = JSON.parse(response.body)
+
+    assert_equal 1, json['restaurant']['position_in_line']
+  end
+
+  test "position in line should work 2" do
+    user4 = users(:user4)
+    porch = restaurants(:porch)
+    # Make a reservation first
+    post make_reservation_url(user4, porch), params: { reservation: { party_size: 5 } }, as: :json
+
+    get user_restaurant_url(user4, porch), as: :json
+    json = JSON.parse(response.body)
+
+    assert_equal 2, json['restaurant']['position_in_line']
   end
 
 end
