@@ -53,7 +53,25 @@ class ReservationTest < ActiveSupport::TestCase
 
     user3 = users(:user3)
     assert_equal Reservation.for_user(user3.id).count, 2
+  end
 
+  test "waiting or seated scope" do
+    assert_equal Reservation.waiting_or_seated.count, 3
+  end
+
+  test "is seated method" do
+    assert reservations(:seated1).is_seated?
+    assert reservations(:seated2).is_seated?
+    assert reservations(:old1).is_seated?
+    assert_not reservations(:inLine).is_seated?
+  end
+
+  test "cancel method" do
+    inLine = reservations(:inLine)
+    inLine.cancel
+    inLine.save
+
+    assert inLine.cancelled = true
   end
 
 
