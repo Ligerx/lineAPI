@@ -204,4 +204,14 @@ class UsersController < ApplicationController
       # Return the index of the reservation in the waiting list
       list.find_index(reservation) # remember, counting starts at 0
     end
+
+    def position_in_line(restaurant)
+      user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
+      waiting_list = restaurant.reservations.waiting
+      spot = find_spot_in_line(user_reservation, waiting_list) # index 0
+      # byebug
+      return spot
+    end
+    helper_method :position_in_line
+
 end

@@ -15,3 +15,5 @@ json.time_closed restaurant.time_closed
 
 json.general_estimated_seating_time general_estimated_seating_time(restaurant)
 json.personal_estimated_seating_time personal_estimated_seating_time(restaurant)
+
+json.position_in_line position_in_line(restaurant)
