@@ -208,9 +208,8 @@ class UsersController < ApplicationController
     def position_in_line(restaurant)
       user_reservation = restaurant.reservations.for_user(params[:id]).waiting.by_time_reserved.first
       waiting_list = restaurant.reservations.waiting
-      spot = find_spot_in_line(user_reservation, waiting_list) # index 0
-      # byebug
-      return spot
+      # index 0
+      find_spot_in_line(user_reservation, waiting_list) # index 0
     end
     helper_method :position_in_line
 
