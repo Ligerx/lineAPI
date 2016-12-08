@@ -60,7 +60,6 @@
     if(restaurant) {
       url += restaurant;
     }
-    $('.url').html('URL: ' + url);
 
     $.ajax({
       method: "GET",
@@ -70,10 +69,10 @@
     .done(function( msg ) {
       console.log('Got server response');
       console.log(msg);
-      $('.response').html('<pre>' + JSON.stringify(msg, null, 4) + '</pre>');
+      prependHTML(url, JSON.stringify(msg, null, 4));
     })
     .fail(function(error) {
-      $('.response').html('<pre>Error\n' + JSON.stringify(error, null, 4) + '</pre>');
+      prependHTML(url, 'Error\n' + JSON.stringify(error, null, 4));
     });
   });
 
@@ -87,7 +86,6 @@
       url += restaurant;
     }
     url += '/make-reservation'
-    $('.url').html('URL: ' + url);
 
     var data = { "reservation": { "party_size": 4 } };
     $.ajax({
@@ -99,17 +97,16 @@
     .done(function( msg ) {
       console.log('Got server response');
       console.log(msg);
-      $('.response').html('<pre>' + JSON.stringify(msg, null, 4) + '</pre>');
+      prependHTML(url, JSON.stringify(msg, null, 4));
     })
     .fail(function(error) {
-      $('.response').html('<pre>Error\n' + JSON.stringify(error, null, 4) + '</pre>');
+      prependHTML(url, 'Error\n' + JSON.stringify(error, null, 4));
     });
   });
 
   $('#cancel-reservation-button').click(function() {
     var user = $('.cancel-reservation input[name="user"]').val();
     var url = '/users/' + user + '/restaurants/cancel-reservation';
-    $('.url').html('URL: ' + url);
 
     $.ajax({
       method: "POST",
@@ -119,12 +116,20 @@
     .done(function( msg ) {
       console.log('Got server response');
       console.log(msg);
-      $('.response').html('<pre>Successfully cancelled!</pre>');
+      prependHTML(url, 'Successfully cancelled!');
     })
     .fail(function(error) {
-      $('.response').html('<pre>Error\n' + JSON.stringify(error, null, 4) + '</pre>');
+      prependHTML(url, 'Error\n' + JSON.stringify(error, null, 4));
     });
   });
+
+  function prependHTML(url, html) {
+    $('.response').prepend(urlHTML(url) + '<pre>' + html + '</pre>');
+  }
+
+  function urlHTML(url) {
+    return '<hr><pre>URL: ' + url + '</pre>';
+  }
   </script>
 
 </body>
