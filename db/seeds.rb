@@ -50,9 +50,10 @@ line for the open table, so no wait time.
 reservation1 = Reservation.new()
 reservation1.user = user3
 reservation1.restaurant = restaurant1
+reservation1.party_size = 4
 reservation1.time_reserved = 1.hour.ago
 reservation1.time_seated = 45.minutes.ago
-reservation1.save
+reservation1.save!
 
 
 #####   This is the sample JSON used in the seed   #####
