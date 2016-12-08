@@ -14,11 +14,11 @@ restaurant1.beaconUUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 restaurant1.save
 
 restaurant2 = Restaurant.new(json["restaurants"][1])
-restaurant2.beaconUUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
+restaurant2.beaconUUID = "fakeUUID"
 restaurant2.save
 
 restaurant3 = Restaurant.new(json["restaurants"][2])
-restaurant3.beaconUUID = "fakeUUID"
+restaurant3.beaconUUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 restaurant3.save
 
 user1 = User.create(json["users"][0])
