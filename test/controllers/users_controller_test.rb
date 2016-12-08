@@ -53,4 +53,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response 422
     assert_equal porch.reservations.count, 3
   end
+
+  test "should cancel reservation" do
+    user3 = users(:user3)
+    post cancel_reservation_url(user3), as: :json
+
+    assert_response 204
+    assert_equal user3.reservations.waiting_or_seated.count, 0
+  end
+
+  test "should not cancel reservations" do
+    user4 = users(:user4)
+    assert_equal user4.reservations.count, 0
+    post cancel_reservation_url(user4), as: :json
+
+    assert_response 422
+  end
 end
