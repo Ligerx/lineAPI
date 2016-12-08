@@ -8,7 +8,12 @@ class UsersController < ApplicationController
   # GET /users/:id/restaurants
   def restaurants
     # TODO: Update this so it is only returning in range restaurants.
-    @restaurants = Restaurant.all
+    if params[:restaurants]
+      @restaurants = Restaurant.where(beaconUUID: uuid_params)
+    else
+      # fallback if no uuids are attempted to be passed???
+      @restaurants = Restaurant.all
+    end
   end
 
   # GET /users/:id/restaurants/:restaurant_id
@@ -122,6 +127,11 @@ class UsersController < ApplicationController
         restaurant_id: params[:restaurant_id],
         party_size: params[:reservation][:party_size]
       }
+    end
+
+    def uuid_params
+      # permit the uuids array through
+      params.require(:restaurants).permit(uuids: [])
     end
 
     # Checking for the general seating time as if you were
